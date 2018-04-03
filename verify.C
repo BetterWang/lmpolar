@@ -9,11 +9,9 @@ void verify(int s1 = 1){
 		f = new TFile(Form("%s/output_%i_%i.root", ftxt[s1], s2, s3));
 
 		TH1D * h;
-		TH1D * x;
 		unsigned int Nevt;
 		if (!f->IsZombie()) {
 			h= (TH1D*) f->Get("hNoff");
-			x= (TH1D*) f->Get("hCnR2");
 			Nevt = h->GetEntries();
 			cout << " s1 = " << s1 << "\ts2 = " << s2 << "\tNevt = " << Nevt;
 			if (Nevt==0 ) cout << "\t!!!Empty!!!" << endl;
