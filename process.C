@@ -4,7 +4,7 @@
 #include <TH1.h>
 #include <TMath.h>
 using namespace std;
-void process(int s1 = 1, int s2 = 10, int s3 = 10)
+void process(int s1 = 0, int s2 = 10, int s3 = 10)
 {
         cout << " s1 = " << s1 << " s2 = " << s2 << " s3 = " << s3 << endl;
         TH1::SetDefaultSumw2();
@@ -215,19 +215,30 @@ void process(int s1 = 1, int s2 = 10, int s3 = 10)
 	TH1D * hQ2PhiP[7][200];
 	TH1D * hQ2PhiN[7][200];
 
+	TH1D * hQ1Res[7][200];
+	TH1D * hQ2Res[7][200];
+
+	TH1D * hQ1ResSP[7][200];
+	TH1D * hQ2ResSP[7][200];
+
 //	double Q1Rho[7][200];
 //	double Q1RhoP[7][200];
 //	double Q1RhoN[7][200];
 
 	for ( int c = 0; c < 200; c++ ) {
 		for ( int i = 0; i < 7; i++ ) {
-			hQ1PhiS[i][c] = new TH1D(Form("hQ1PhiS_%i_%i", i, c), "", 64, -TMath::Pi(), -TMath::Pi());
-			hQ1PhiP[i][c] = new TH1D(Form("hQ1PhiP_%i_%i", i, c), "", 64, -TMath::Pi(), -TMath::Pi());
-			hQ1PhiN[i][c] = new TH1D(Form("hQ1PhiN_%i_%i", i, c), "", 64, -TMath::Pi(), -TMath::Pi());
+			hQ1PhiS[i][c] = new TH1D(Form("hQ1PhiS_%i_%i", i, c), "", 64, -TMath::Pi(), TMath::Pi());
+			hQ1PhiP[i][c] = new TH1D(Form("hQ1PhiP_%i_%i", i, c), "", 64, -TMath::Pi(), TMath::Pi());
+			hQ1PhiN[i][c] = new TH1D(Form("hQ1PhiN_%i_%i", i, c), "", 64, -TMath::Pi(), TMath::Pi());
 
-			hQ2PhiS[i][c] = new TH1D(Form("hQ2PhiS_%i_%i", i, c), "", 64, -TMath::Pi(), -TMath::Pi());
-			hQ2PhiP[i][c] = new TH1D(Form("hQ2PhiP_%i_%i", i, c), "", 64, -TMath::Pi(), -TMath::Pi());
-			hQ2PhiN[i][c] = new TH1D(Form("hQ2PhiN_%i_%i", i, c), "", 64, -TMath::Pi(), -TMath::Pi());
+			hQ2PhiS[i][c] = new TH1D(Form("hQ2PhiS_%i_%i", i, c), "", 64, -TMath::Pi(), TMath::Pi());
+			hQ2PhiP[i][c] = new TH1D(Form("hQ2PhiP_%i_%i", i, c), "", 64, -TMath::Pi(), TMath::Pi());
+			hQ2PhiN[i][c] = new TH1D(Form("hQ2PhiN_%i_%i", i, c), "", 64, -TMath::Pi(), TMath::Pi());
+
+			hQ1Res[i][c]  = new TH1D(Form("hQ1Res_%i_%i", i, c), "", 100, -1., 1.);
+			hQ2Res[i][c]  = new TH1D(Form("hQ2Res_%i_%i", i, c), "", 100, -1., 1.);
+			hQ1ResSP[i][c]= new TH1D(Form("hQ1ResSP_%i_%i", i, c), "", 1000, -10., 10.);
+			hQ2ResSP[i][c]= new TH1D(Form("hQ2ResSP_%i_%i", i, c), "", 1000, -10., 10.);
 		}
 	}
 
@@ -287,6 +298,38 @@ void process(int s1 = 1, int s2 = 10, int s3 = 10)
 		hQ2PhiN[5][gNoff]->Fill(argm_CaloQ2f);
 		hQ2PhiN[6][gNoff]->Fill(argm_CaloQ2g);
 
+		hQ1Res[0][gNoff]->Fill( TMath::Cos(argp_CaloQ1a - argm_CaloQ1a) );
+		hQ1Res[1][gNoff]->Fill( TMath::Cos(argp_CaloQ1b - argm_CaloQ1b) );
+		hQ1Res[2][gNoff]->Fill( TMath::Cos(argp_CaloQ1c - argm_CaloQ1c) );
+		hQ1Res[3][gNoff]->Fill( TMath::Cos(argp_CaloQ1d - argm_CaloQ1d) );
+		hQ1Res[4][gNoff]->Fill( TMath::Cos(argp_CaloQ1e - argm_CaloQ1e) );
+		hQ1Res[5][gNoff]->Fill( TMath::Cos(argp_CaloQ1f - argm_CaloQ1f) );
+		hQ1Res[6][gNoff]->Fill( TMath::Cos(argp_CaloQ1g - argm_CaloQ1g) );
+
+		hQ2Res[0][gNoff]->Fill( TMath::Cos( (argp_CaloQ2a - argm_CaloQ2a) ) );
+		hQ2Res[1][gNoff]->Fill( TMath::Cos( (argp_CaloQ2b - argm_CaloQ2b) ) );
+		hQ2Res[2][gNoff]->Fill( TMath::Cos( (argp_CaloQ2c - argm_CaloQ2c) ) );
+		hQ2Res[3][gNoff]->Fill( TMath::Cos( (argp_CaloQ2d - argm_CaloQ2d) ) );
+		hQ2Res[4][gNoff]->Fill( TMath::Cos( (argp_CaloQ2e - argm_CaloQ2e) ) );
+		hQ2Res[5][gNoff]->Fill( TMath::Cos( (argp_CaloQ2f - argm_CaloQ2f) ) );
+		hQ2Res[6][gNoff]->Fill( TMath::Cos( (argp_CaloQ2g - argm_CaloQ2g) ) );
+
+		hQ1ResSP[0][gNoff]->Fill( absp_CaloQ1a * absm_CaloQ1a * TMath::Cos(argp_CaloQ1a - argm_CaloQ1a) );
+		hQ1ResSP[1][gNoff]->Fill( absp_CaloQ1b * absm_CaloQ1b * TMath::Cos(argp_CaloQ1b - argm_CaloQ1b) );
+		hQ1ResSP[2][gNoff]->Fill( absp_CaloQ1c * absm_CaloQ1c * TMath::Cos(argp_CaloQ1c - argm_CaloQ1c) );
+		hQ1ResSP[3][gNoff]->Fill( absp_CaloQ1d * absm_CaloQ1d * TMath::Cos(argp_CaloQ1d - argm_CaloQ1d) );
+		hQ1ResSP[4][gNoff]->Fill( absp_CaloQ1e * absm_CaloQ1e * TMath::Cos(argp_CaloQ1e - argm_CaloQ1e) );
+		hQ1ResSP[5][gNoff]->Fill( absp_CaloQ1f * absm_CaloQ1f * TMath::Cos(argp_CaloQ1f - argm_CaloQ1f) );
+		hQ1ResSP[6][gNoff]->Fill( absp_CaloQ1g * absm_CaloQ1g * TMath::Cos(argp_CaloQ1g - argm_CaloQ1g) );
+
+		hQ2ResSP[0][gNoff]->Fill( absp_CaloQ2a * absm_CaloQ2a * TMath::Cos(argp_CaloQ2a - argm_CaloQ2a) );
+		hQ2ResSP[1][gNoff]->Fill( absp_CaloQ2b * absm_CaloQ2b * TMath::Cos(argp_CaloQ2b - argm_CaloQ2b) );
+		hQ2ResSP[2][gNoff]->Fill( absp_CaloQ2c * absm_CaloQ2c * TMath::Cos(argp_CaloQ2c - argm_CaloQ2c) );
+		hQ2ResSP[3][gNoff]->Fill( absp_CaloQ2d * absm_CaloQ2d * TMath::Cos(argp_CaloQ2d - argm_CaloQ2d) );
+		hQ2ResSP[4][gNoff]->Fill( absp_CaloQ2e * absm_CaloQ2e * TMath::Cos(argp_CaloQ2e - argm_CaloQ2e) );
+		hQ2ResSP[5][gNoff]->Fill( absp_CaloQ2f * absm_CaloQ2f * TMath::Cos(argp_CaloQ2f - argm_CaloQ2f) );
+		hQ2ResSP[6][gNoff]->Fill( absp_CaloQ2g * absm_CaloQ2g * TMath::Cos(argp_CaloQ2g - argm_CaloQ2g) );
+
 		hNoff->Fill(gNoff);
 	}
 
@@ -301,6 +344,11 @@ void process(int s1 = 1, int s2 = 10, int s3 = 10)
 			hQ2PhiS[i][c]->Write();
 			hQ2PhiP[i][c]->Write();
 			hQ2PhiN[i][c]->Write();
+
+			hQ1Res[i][c]->Write();
+			hQ2Res[i][c]->Write();
+			hQ1ResSP[i][c]->Write();
+			hQ2ResSP[i][c]->Write();
 		}
 	}
 	hNoff->Write();
