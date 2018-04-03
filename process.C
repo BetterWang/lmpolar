@@ -11,6 +11,7 @@ void process(int s1 = 1, int s2 = 10, int s3 = 10)
         addchain(s1);
 
         int gNoff;
+	TH1D * hNoff = new TH1D("hNoff", "hNoff", 1000, -0.5, 999.5);
 
 	vector<double>  *phi;
 	vector<double>  *eta;
@@ -285,6 +286,8 @@ void process(int s1 = 1, int s2 = 10, int s3 = 10)
 		hQ2PhiN[4][gNoff]->Fill(argm_CaloQ2e);
 		hQ2PhiN[5][gNoff]->Fill(argm_CaloQ2f);
 		hQ2PhiN[6][gNoff]->Fill(argm_CaloQ2g);
+
+		hNoff->Fill(gNoff);
 	}
 
 
@@ -300,4 +303,5 @@ void process(int s1 = 1, int s2 = 10, int s3 = 10)
 			hQ2PhiN[i][c]->Write();
 		}
 	}
+	hNoff->Write();
 }
