@@ -34,26 +34,27 @@ void process(int s1 = 0, int s2 = 10, int s3 = 10)
 	chV->SetBranchAddress("Noff",		&Noff);
 	chV->SetBranchAddress("NV0",		&NV0);
 
-	TH1D * h1LmLm[200];
-	TH1D * h1LmLmBar[200];
-	TH1D * h1LmBarLmBar[200];
+	TH1D * h1LmLm		= new TH1D("h1LmLm",       "h1LmLm", 600, 0, 600);
+	TH1D * h1LmLmBar	= new TH1D("h1LmLmBar",    "h1LmLmBar", 600, 0, 600);
+	TH1D * h1LmBarLmBar	= new TH1D("h1LmBarLmBar", "h1LmBarLmBar", 600, 0, 600);
 
-	TH1D * h2LmLm[200];
-	TH1D * h2LmLmBar[200];
-	TH1D * h2LmBarLmBar[200];
+	TH1D * h2LmLm		= new TH1D("h2LmLm",       "h2LmLm", 600, 0, 600);
+	TH1D * h2LmLmBar	= new TH1D("h2LmLmBar",    "h2LmLmBar", 600, 0, 600);
+	TH1D * h2LmBarLmBar	= new TH1D("h2LmBarLmBar", "h2LmBarLmBar", 600, 0, 600);
+
 
 	TH1D * hNoff = new TH1D("hNoff", "hNoff", 200, 0, 200);
 	TH1D * hNV0  = new TH1D("hNV0",  "hNV0",  20,  0, 20);
 
-	for ( int c = 0; c < 200; c++ ) {
-		h1LmLm[c]	= new TH1D(Form("h1LmLm_%i", c),	Form("h1LmLm_%i", c),		200, -1., 1.);
-		h1LmLmBar[c]	= new TH1D(Form("h1LmLmBar_%i", c),	Form("h1LmLmBar_%i", c),	200, -1., 1.);
-		h1LmBarLmBar[c]	= new TH1D(Form("h1LmBarLmBar_%i", c),	Form("h1LmBarLmBar_%i", c),	200, -1., 1.);
-
-		h2LmLm[c]	= new TH1D(Form("h2LmLm_%i", c),	Form("h2LmLm_%i", c),		200, -1., 1.);
-		h2LmLmBar[c]	= new TH1D(Form("h2LmLmBar_%i", c),	Form("h2LmLmBar_%i", c),	200, -1., 1.);
-		h2LmBarLmBar[c]	= new TH1D(Form("h2LmBarLmBar_%i", c),	Form("h2LmBarLmBar_%i", c),	200, -1., 1.);
-	}
+//	for ( int c = 0; c < 200; c++ ) {
+//		h1LmLm[c]	= new TH1D(Form("h1LmLm_%i", c),	Form("h1LmLm_%i", c),		200, -1., 1.);
+//		h1LmLmBar[c]	= new TH1D(Form("h1LmLmBar_%i", c),	Form("h1LmLmBar_%i", c),	200, -1., 1.);
+//		h1LmBarLmBar[c]	= new TH1D(Form("h1LmBarLmBar_%i", c),	Form("h1LmBarLmBar_%i", c),	200, -1., 1.);
+//
+//		h2LmLm[c]	= new TH1D(Form("h2LmLm_%i", c),	Form("h2LmLm_%i", c),		200, -1., 1.);
+//		h2LmLmBar[c]	= new TH1D(Form("h2LmLmBar_%i", c),	Form("h2LmLmBar_%i", c),	200, -1., 1.);
+//		h2LmBarLmBar[c]	= new TH1D(Form("h2LmBarLmBar_%i", c),	Form("h2LmBarLmBar_%i", c),	200, -1., 1.);
+//	}
 
 	unsigned int ievt = 0;
         if ( s2 != s3 ) ievt = s2;
@@ -64,23 +65,23 @@ void process(int s1 = 0, int s2 = 10, int s3 = 10)
 		else ievt+= s3;
 
 		for ( auto&& d : *v1LmLm ) {
-			h1LmLm[Noff]->Fill(d);
+			h1LmLm->Fill(Noff, d);
 		}
 		for ( auto&& d : *v1LmLmBar ) {
-			h1LmLmBar[Noff]->Fill(d);
+			h1LmLmBar->Fill(Noff, d);
 		}
 		for ( auto&& d : *v1LmBarLmBar ) {
-			h1LmBarLmBar[Noff]->Fill(d);
+			h1LmBarLmBar->Fill(Noff, d);
 		}
 
 		for ( auto&& d : *v2LmLm ) {
-			h2LmLm[Noff]->Fill(d);
+			h2LmLm->Fill(Noff, d);
 		}
 		for ( auto&& d : *v2LmLmBar ) {
-			h2LmLmBar[Noff]->Fill(d);
+			h2LmLmBar->Fill(Noff, d);
 		}
 		for ( auto&& d : *v2LmBarLmBar ) {
-			h2LmBarLmBar[Noff]->Fill(d);
+			h2LmBarLmBar->Fill(Noff, d);
 		}
 
 		hNoff->Fill(Noff);
@@ -91,12 +92,12 @@ void process(int s1 = 0, int s2 = 10, int s3 = 10)
 	TFile * fwrite = new TFile(Form("%s/output_%i_%i.root", ftxt[s1], s2, s3), "recreate");
 	hNoff->Write();
 	hNV0->Write();
-	for ( int c = 0; c < 200; c++ ) {
-		h1LmLm[c]->Write();
-		h1LmLmBar[c]->Write();
-		h1LmBarLmBar[c]->Write();
-		h2LmLm[c]->Write();
-		h2LmLmBar[c]->Write();
-		h2LmBarLmBar[c]->Write();
-	}
+
+	h1LmLm->Write();
+	h1LmLmBar->Write();
+	h1LmBarLmBar->Write();
+	h2LmLm->Write();
+	h2LmLmBar->Write();
+	h2LmBarLmBar->Write();
+
 }
