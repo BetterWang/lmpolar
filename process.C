@@ -129,19 +129,30 @@ void process(int s1 = 0, int s2 = 10, int s3 = 10)
 
 
 	TFile * fwrite = new TFile(Form("%s/output_%i_%i.root", ftxt[s1], s2, s3), "recreate");
-	hNoff->Write();
-	hNV0->Write();
 
 	hPLmLm->Write();
 	hPLmLmBar->Write();
 	hPLmBarLmBar->Write();
 
+	hMPLmLm->Write();
+	hMPLmLmBar->Write();
+	hMPLmBarLmBar->Write();
+
 	h1LmLm->Write();
 	h1LmLmBar->Write();
 	h1LmBarLmBar->Write();
 
+	hm1LmLm->Write();
+	hm1LmLmBar->Write();
+	hm1LmBarLmBar->Write();
+
 	h2LmLm->Write();
 	h2LmLmBar->Write();
 	h2LmBarLmBar->Write();
+	hm2LmLm->Write();
+	hm2LmLmBar->Write();
+	hm2LmBarLmBar->Write();
 
+	hNoff->Write();
+	hNV0->Write();
 }
