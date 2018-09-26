@@ -1,0 +1,11 @@
+./runGet1.sh 1
+./runGet1.sh 10
+./runGet1.sh 17
+./runGet1.sh 24
+./runGet1.sh 25
+./runGet1.sh 32
+./runGet1.sh 33
+./runGet1.sh 34
+./runGet1.sh 35
+./runGet1.sh 36
+./runGet1.sh 37
